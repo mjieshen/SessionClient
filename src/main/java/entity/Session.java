@@ -9,6 +9,7 @@ public class Session {
     private long startTimeStamp;
     private Timer timer = new Timer();
     private volatile boolean stopFlag = false;
+
     public Session(long sessionId, long sessionTimeInMilliSeconds) {
         this.sessionId = sessionId;
         this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
@@ -16,14 +17,22 @@ public class Session {
 
     //TODO
     public void start() {
+        /**
+         * 1. build start requestBody
+         * 2. send request
+         */
         this.startTimeStamp = System.currentTimeMillis();
         System.out.println("start:" + this.getSessionId() + ",time:" + this.getSessionTimeInMilliSeconds());
     }
 
     //TODO
     public void stop() {
-
+        /**
+         * 1. build start requestBody
+         * 2. send request
+         */
     }
+
     public long getSessionId() {
         return sessionId;
     }
