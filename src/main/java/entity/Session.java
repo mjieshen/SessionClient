@@ -2,12 +2,13 @@ package entity;
 
 import com.alibaba.fastjson.JSON;
 import utils.Constants;
-import utils.HttpUtils;
+import utils.HttpClient;
 
 public class Session implements Constants {
     private long sessionId;
     private long sessionTimeInMilliSeconds;
     private long startTimeStamp;
+    private HttpClient httpClient = new HttpClient();
 
     public Session(long sessionId, long sessionTimeInMilliSeconds) {
         this.sessionId = sessionId;
@@ -26,7 +27,7 @@ public class Session implements Constants {
     private String sendRequest(ActionType actionType) {
         DeliverySessionCreationType deliverySession = build(actionType);
         String request = JSON.toJSONString(deliverySession);
-        String response = HttpUtils.sendHttpPost(String.format(urlFormat, sessionId), request);
+        String response = httpClient.sendHttpPost(String.format(urlFormat, sessionId), request);
 
         return response;
     }
@@ -61,5 +62,9 @@ public class Session implements Constants {
 
     public void setSessionTimeInMilliSeconds(long sessionTimeInMilliSeconds) {
         this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
+    }
+
+    protected void setHttpClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
     }
 }

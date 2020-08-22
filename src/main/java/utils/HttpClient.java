@@ -10,10 +10,10 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HttpUtils {
-    private static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
+public class HttpClient {
+    private static Logger logger = LoggerFactory.getLogger(HttpClient.class);
 
-    public static String sendHttpPost(String url, String requestBody) {
+    public String sendHttpPost(String url, String requestBody) {
         String responseBody = null;
         try {
             // (发送时间,发送url,和body,结果,连接信息)
