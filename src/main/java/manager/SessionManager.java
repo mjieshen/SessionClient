@@ -5,14 +5,29 @@ import processor.DefaultSessionProcessor;
 import processor.SessionProcessor;
 import task.DeliverySessionTask;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 
 public class SessionManager {
     private Map<Long, SessionProcessor> sessionProcessors = new ConcurrentHashMap<>();
-    private ExecutorService executor = Executors.newFixedThreadPool(10);
+    private ExecutorService executor = Executors.newCachedThreadPool();
+
+    public SessionManager(){
+//        init();
+    }
+
+    //TODO:
+    private void init() {
+        int corePoolSize = Runtime.getRuntime().availableProcessors();
+        int maxPoolSize = 1000;
+        executor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 1L, TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable>(10000),
+                new ThreadFactory() {
+                    @Override
+                    public Thread newThread(Runnable r) {
+                        return null;
+                    }
+                }, new ThreadPoolExecutor.CallerRunsPolicy());
+    }
 
     public boolean createSession(long sessionId, long sessionTimeInMilliSeconds) {
         SessionProcessor sessionProcessor = new DefaultSessionProcessor(new Session(sessionId, sessionTimeInMilliSeconds));

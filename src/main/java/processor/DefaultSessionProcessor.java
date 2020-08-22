@@ -26,7 +26,6 @@ public class DefaultSessionProcessor implements SessionProcessor {
             @Override
             public void run() {
                 try {
-                    System.out.println("stop:" + session.getSessionId() + ",time:" + session.getSessionTimeInMilliSeconds() + ",delay:" + (System.currentTimeMillis() - session.getStartTimeStamp()));
                     session.stop();
                 } catch (Exception e) {
                     System.out.println("stop session failed!");

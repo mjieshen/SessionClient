@@ -1,7 +1,5 @@
 package entity;
 
-import entity.ActionType;
-
 public class DeliverySessionCreationType {
     private long deliverySessionId;
     private ActionType actionType;
@@ -71,8 +69,8 @@ public class DeliverySessionCreationType {
 
     @Override
     public String toString() {
-        return "entity.DeliverySessionCreationType{" +
-                "sessionId=" + deliverySessionId +
+        return "DeliverySessionCreationType{" +
+                "deliverySessionId=" + deliverySessionId +
                 ", actionType=" + actionType +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +

@@ -1,52 +1,58 @@
 package entity;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.alibaba.fastjson.JSON;
+import utils.Constants;
+import utils.HttpUtils;
 
-public class Session {
+public class Session implements Constants {
     private long sessionId;
     private long sessionTimeInMilliSeconds;
     private long startTimeStamp;
-    private Timer timer = new Timer();
-    private volatile boolean stopFlag = false;
 
     public Session(long sessionId, long sessionTimeInMilliSeconds) {
         this.sessionId = sessionId;
         this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
     }
 
-    //TODO
-    public void start() {
-        /**
-         * 1. build start requestBody
-         * 2. send request
-         */
-        this.startTimeStamp = System.currentTimeMillis();
-        System.out.println("start:" + this.getSessionId() + ",time:" + this.getSessionTimeInMilliSeconds());
+    public String start() {
+        startTimeStamp = System.currentTimeMillis();
+        return sendRequest(ActionType.Start);
     }
 
-    //TODO
-    public void stop() {
-        /**
-         * 1. build start requestBody
-         * 2. send request
-         */
+    public String stop() {
+        return sendRequest(ActionType.Stop);
     }
 
-    public long getSessionId() {
-        return sessionId;
+    private String sendRequest(ActionType actionType) {
+        DeliverySessionCreationType deliverySession = build(actionType);
+        String request = JSON.toJSONString(deliverySession);
+        String response = HttpUtils.sendHttpPost(String.format(urlFormat, sessionId), request);
+
+        return response;
     }
 
-    public void setSessionId(long sessionId) {
-        this.sessionId = sessionId;
+    private DeliverySessionCreationType build(ActionType actionType) {
+        DeliverySessionCreationType deliverySession = new DeliverySessionCreationType();
+        deliverySession.setDeliverySessionId(sessionId);
+        deliverySession.setStartTime(startTimeStamp);
+        deliverySession.setEndTime(startTimeStamp + sessionTimeInMilliSeconds);
+        deliverySession.setVersion(clientVersion);
+        deliverySession.setActionType(actionType);
+
+        return deliverySession;
+    }
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "sessionId=" + sessionId +
+                ", sessionTimeInMilliSeconds=" + sessionTimeInMilliSeconds +
+                ", startTimeStamp=" + startTimeStamp +
+                '}';
     }
 
     public long getStartTimeStamp() {
         return startTimeStamp;
-    }
-
-    public void setStartTimeStamp(long startTimeStamp) {
-        this.startTimeStamp = startTimeStamp;
     }
 
     public long getSessionTimeInMilliSeconds() {
@@ -55,13 +61,5 @@ public class Session {
 
     public void setSessionTimeInMilliSeconds(long sessionTimeInMilliSeconds) {
         this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
-    }
-
-    @Override
-    public String toString() {
-        return "entity.Session{" +
-                "sessionId=" + sessionId +
-                ", sessionTimeInMilliSeconds=" + sessionTimeInMilliSeconds +
-                '}';
     }
 }
