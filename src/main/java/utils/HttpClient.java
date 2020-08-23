@@ -27,6 +27,7 @@ public class HttpClient {
             CloseableHttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
             responseBody = EntityUtils.toString(entity, "UTF-8");
+            logger.info("responseStatusCode:" + response.getStatusLine().getStatusCode());
             logger.info("response:" + responseBody);
             response.close();
             httpClient.close();
