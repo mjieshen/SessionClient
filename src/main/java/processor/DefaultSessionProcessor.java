@@ -1,14 +1,16 @@
 package processor;
 
 import entity.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class DefaultSessionProcessor implements SessionProcessor {
+    private static Logger logger = LoggerFactory.getLogger(DefaultSessionProcessor.class);
     private Session session;
-    private volatile boolean stopFlag = false;
-    private Timer timer = new Timer();
+    private Timer timer;
 
     public DefaultSessionProcessor(Session session) {
         this.session = session;
@@ -16,7 +18,7 @@ public class DefaultSessionProcessor implements SessionProcessor {
 
     @Override
     public void createSession() {
-        this.session.start();
+        session.start();
         scheduleSession();
     }
 
@@ -28,7 +30,7 @@ public class DefaultSessionProcessor implements SessionProcessor {
                 try {
                     session.stop();
                 } catch (Exception e) {
-                    System.out.println("stop session failed!");
+                    logger.error("stop session failed!");
                 }
             }
         }, session.getSessionTimeInMilliSeconds());
@@ -36,12 +38,15 @@ public class DefaultSessionProcessor implements SessionProcessor {
 
     @Override
     public void resetSessionTime(long sessionTimeInMilliSeconds) {
-        timer.cancel();
-        long runningTime = System.currentTimeMillis()-session.getStartTimeStamp();
+        if (timer != null) {
+            timer.cancel();
+        }
+
+        long runningTime = System.currentTimeMillis() - session.getStartTimeStamp();
         if (runningTime >= sessionTimeInMilliSeconds) {
             session.stop();
         } else {
-            session.setSessionTimeInMilliSeconds(sessionTimeInMilliSeconds-runningTime);
+            session.setSessionTimeInMilliSeconds(sessionTimeInMilliSeconds - runningTime);
             scheduleSession();
         }
     }

@@ -36,9 +36,12 @@ public class Session implements Constants {
         DeliverySessionCreationType deliverySession = new DeliverySessionCreationType();
         deliverySession.setDeliverySessionId(sessionId);
         deliverySession.setStartTime(startTimeStamp);
-        deliverySession.setEndTime(startTimeStamp + sessionTimeInMilliSeconds);
         deliverySession.setVersion(clientVersion);
         deliverySession.setActionType(actionType);
+
+        if (ActionType.Stop.equals(actionType)) {
+            deliverySession.setEndTime(System.currentTimeMillis());
+        }
 
         return deliverySession;
     }
@@ -64,7 +67,7 @@ public class Session implements Constants {
         this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
     }
 
-    protected void setHttpClient(HttpClient httpClient) {
+    public void setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
 }

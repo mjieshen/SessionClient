@@ -1,0 +1,30 @@
+package processor;
+
+import entity.Session;
+import org.junit.Test;
+import utils.MockHttpClient;
+
+import java.util.concurrent.TimeUnit;
+
+public class DefaultSessionProcessorTest {
+
+    @Test
+    public void testCreateSession() throws Exception {
+        Session session = new Session(123456, 1000);
+        session.setHttpClient(new MockHttpClient());
+        SessionProcessor sessionProcessor = new DefaultSessionProcessor(session);
+        sessionProcessor.createSession();
+        TimeUnit.SECONDS.sleep(5);
+    }
+
+    @Test
+    public void testResetSessionTime() throws Exception {
+        Session session = new Session(123456, 1000);
+        session.setHttpClient(new MockHttpClient());
+        SessionProcessor sessionProcessor = new DefaultSessionProcessor(session);
+        sessionProcessor.createSession();
+
+        sessionProcessor.resetSessionTime(10000);
+        TimeUnit.SECONDS.sleep(15);
+    }
+}

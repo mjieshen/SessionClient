@@ -12,7 +12,7 @@ public class MockHttpClient extends HttpClient {
         logger.info("requestTimeStamp:" + System.currentTimeMillis());
         logger.info("url:" + url);
         logger.info("request:" + requestBody);
-        String responseBody = "200 ok";
+        String responseBody = "mock responseBody";
         logger.info("response:" + responseBody);
 
         return responseBody;
