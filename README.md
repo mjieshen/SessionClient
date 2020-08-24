@@ -4,7 +4,8 @@
 1）SessionManager类包含一个map和一个线程池，map用于保存所有的Session，线程池用于异步提交Session。   
 2）DefaultSessionProcessor类用于具体处理，包括start请求，以及按照sessionExpireTime执行的stop请求。
 2.	类图  
-![uml](https://github.com/mjieshen/SessionClient/tree/master/src/main/resources/uml-class.jpg)
+![uml](https://github.com/mjieshen/SessionClient/tree/master/src/main/resources/uml-class.jpg)  
+![test](https://github.com/mjieshen/SessionClient/tree/master/src/main/resources/test.png)
 3.	流程图
 
 **项目部署**
