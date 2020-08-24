@@ -9,7 +9,9 @@ import task.DeliverySessionTask;
 import java.util.Map;
 import java.util.concurrent.*;
 
-
+/**
+ * Created by shenjie on 2020/08/21.
+ */
 public class SessionManager {
     private static Logger logger = LoggerFactory.getLogger(SessionManager.class);
     private Map<Long, SessionProcessor> sessionProcessors = new ConcurrentHashMap<>();
@@ -19,6 +21,9 @@ public class SessionManager {
         init();
     }
 
+    /**
+     * init thread pool
+     */
     private void init() {
         int corePoolSize = Runtime.getRuntime().availableProcessors();
         int maxPoolSize = 1000;
@@ -26,6 +31,13 @@ public class SessionManager {
                 Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
+    /**
+     * create session
+     *
+     * @param sessionId sessionId
+     * @param sessionTimeInMilliSeconds session expire time
+     * @return
+     */
     public boolean createSession(long sessionId, long sessionTimeInMilliSeconds) {
         SessionProcessor sessionProcessor = new DefaultSessionProcessor(new Session(sessionId, sessionTimeInMilliSeconds));
         sessionProcessors.put(sessionId, sessionProcessor);
@@ -35,6 +47,12 @@ public class SessionManager {
         return true;
     }
 
+    /**
+     * reset session expireTime by sessionId
+     *
+     * @param sessionId sessionId
+     * @param sessionTimeInMilliSeconds session expire time
+     */
     public void resetSessionTime(long sessionId, long sessionTimeInMilliSeconds) {
         logger.info("reset sessionId[{}] sessionTime[{}]", sessionId, sessionTimeInMilliSeconds);
         SessionProcessor sessionProcessor = sessionProcessors.get(sessionId);
@@ -43,6 +61,11 @@ public class SessionManager {
         }
     }
 
+    /**
+     * reset all sessions expireTime
+     *
+     * @param sessionTimeInMilliSeconds session expire time
+     */
     public void resetAllSessionTime(long sessionTimeInMilliSeconds) {
         logger.info("reset allSession sessionTime[{}]", sessionTimeInMilliSeconds);
         for (SessionProcessor sessionProcessor : sessionProcessors.values()) {
@@ -50,6 +73,11 @@ public class SessionManager {
         }
     }
 
+    /**
+     * get session processors
+     *
+     * @return
+     */
     public Map<Long, SessionProcessor> getSessionProcessors() {
         return sessionProcessors;
     }

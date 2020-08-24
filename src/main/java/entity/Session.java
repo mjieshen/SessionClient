@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSON;
 import utils.Constants;
 import utils.HttpClient;
 
+/**
+ * Created by shenjie on 2020/08/21.
+ */
 public class Session implements Constants {
     private long sessionId;
     private long sessionTimeInMilliSeconds;
@@ -15,15 +18,31 @@ public class Session implements Constants {
         this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
     }
 
+    /**
+     * send start request
+     *
+     * @return
+     */
     public String start() {
         startTimeStamp = System.currentTimeMillis();
         return sendRequest(ActionType.Start);
     }
 
+    /**
+     * send stop request
+     *
+     * @return
+     */
     public String stop() {
         return sendRequest(ActionType.Stop);
     }
 
+    /**
+     * send request
+     *
+     * @param actionType
+     * @return
+     */
     private String sendRequest(ActionType actionType) {
         DeliverySessionCreationType deliverySession = build(actionType);
         String request = JSON.toJSONString(deliverySession);
@@ -32,6 +51,12 @@ public class Session implements Constants {
         return response;
     }
 
+    /**
+     * build requestBody
+     *
+     * @param actionType actionType
+     * @return
+     */
     private DeliverySessionCreationType build(ActionType actionType) {
         DeliverySessionCreationType deliverySession = new DeliverySessionCreationType();
         deliverySession.setDeliverySessionId(sessionId);

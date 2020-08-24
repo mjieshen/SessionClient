@@ -7,6 +7,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class SessionManagerTest {
+    /*
+      TODO:
+      1.添加代码注释
+      2.写readme
+      3.返回异步对象
+     */
 
     public static final int threadCount = 10;
     private ExecutorService executor = Executors.newFixedThreadPool(threadCount);

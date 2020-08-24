@@ -1,5 +1,8 @@
 package entity;
 
+/**
+ * Created by shenjie on 2020/08/21.
+ */
 public enum ActionType {
     Start("start"),
     Stop("stop");

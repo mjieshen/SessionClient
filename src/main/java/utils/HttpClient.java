@@ -10,9 +10,19 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Created by shenjie on 2020/08/21.
+ */
 public class HttpClient {
     private static Logger logger = LoggerFactory.getLogger(HttpClient.class);
 
+    /**
+     * send post request
+     *
+     * @param url url
+     * @param requestBody requestBody
+     * @return
+     */
     public String sendHttpPost(String url, String requestBody) {
         String responseBody = null;
         try {

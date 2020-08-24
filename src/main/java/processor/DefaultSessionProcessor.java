@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Created by shenjie on 2020/08/21.
+ */
 public class DefaultSessionProcessor implements SessionProcessor {
     private static Logger logger = LoggerFactory.getLogger(DefaultSessionProcessor.class);
     private Session session;
@@ -19,10 +22,13 @@ public class DefaultSessionProcessor implements SessionProcessor {
     @Override
     public void createSession() {
         session.start();
-        scheduleSession();
+        scheduleStopSession();
     }
 
-    private void scheduleSession() {
+    /**
+     * schedule session stop action
+     */
+    private void scheduleStopSession() {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -47,7 +53,7 @@ public class DefaultSessionProcessor implements SessionProcessor {
             session.stop();
         } else {
             session.setSessionTimeInMilliSeconds(sessionTimeInMilliSeconds - runningTime);
-            scheduleSession();
+            scheduleStopSession();
         }
     }
 
