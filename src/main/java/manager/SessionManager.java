@@ -62,7 +62,7 @@ public class SessionManager {
         logger.info("reset sessionId[{}] sessionTime[{}]", sessionId, sessionExpireTimeInMilliSeconds);
         SessionProcessor sessionProcessor = sessionProcessors.get(sessionId);
         if (sessionProcessor != null) {
-            sessionProcessor.resetSessionTime(sessionExpireTimeInMilliSeconds);
+            sessionProcessor.resetSessionExpireTime(sessionExpireTimeInMilliSeconds);
         }
     }
 
@@ -74,7 +74,7 @@ public class SessionManager {
     public void resetAllSessionTime(long sessionExpireTimeInMilliSeconds) {
         logger.info("reset allSession sessionTime[{}]", sessionExpireTimeInMilliSeconds);
         for (SessionProcessor sessionProcessor : sessionProcessors.values()) {
-            sessionProcessor.resetSessionTime(sessionExpireTimeInMilliSeconds);
+            sessionProcessor.resetSessionExpireTime(sessionExpireTimeInMilliSeconds);
         }
     }
 

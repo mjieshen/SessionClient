@@ -21,13 +21,13 @@ public class DefaultSessionProcessorTest {
     }
 
     @Test
-    public void testResetSessionTime() throws Exception {
+    public void testResetSessionExpireTime() throws Exception {
         Session session = new Session(123456, 1000);
         session.setHttpClient(new MockHttpClient());
         SessionProcessor sessionProcessor = new DefaultSessionProcessor(session);
         sessionProcessor.createSession();
 
-        sessionProcessor.resetSessionTime(10000);
+        sessionProcessor.resetSessionExpireTime(10000);
         TimeUnit.SECONDS.sleep(15);
     }
 }

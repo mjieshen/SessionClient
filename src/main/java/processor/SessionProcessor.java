@@ -14,5 +14,5 @@ public interface SessionProcessor {
      *
      * @param sessionExpireTimeInMilliSeconds session expire time
      */
-    void resetSessionTime(long sessionExpireTimeInMilliSeconds);
+    void resetSessionExpireTime(long sessionExpireTimeInMilliSeconds);
 }

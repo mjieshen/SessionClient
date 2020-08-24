@@ -13,7 +13,8 @@ import java.util.TimerTask;
 public class DefaultSessionProcessor implements SessionProcessor {
     private static Logger logger = LoggerFactory.getLogger(DefaultSessionProcessor.class);
     private Session session;
-    private Timer timer;
+    private Timer timer = new Timer();
+    private volatile boolean stopFlag = false;
 
     public DefaultSessionProcessor(Session session) {
         this.session = session;
@@ -31,12 +32,12 @@ public class DefaultSessionProcessor implements SessionProcessor {
      * schedule session stop action
      */
     private void scheduleStopSession() {
-        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 try {
                     session.stop();
+                    stopFlag = true;
                 } catch (Exception e) {
                     logger.error("stop session failed!");
                 }
@@ -45,18 +46,15 @@ public class DefaultSessionProcessor implements SessionProcessor {
     }
 
     @Override
-    public void resetSessionTime(long sessionExpireTimeInMilliSeconds) {
-        if (timer != null) {
+    public void resetSessionExpireTime(long sessionExpireTimeInMilliSeconds) {
+        session.setSessionExpireTimeInMilliSeconds(sessionExpireTimeInMilliSeconds);
+        if (!stopFlag) {
             timer.cancel();
-        }
-
-        long runningTime = System.currentTimeMillis() - session.getStartTimeStamp();
-        if (runningTime >= sessionExpireTimeInMilliSeconds) {
-            session.stop();
-        } else {
-            session.setSessionExpireTimeInMilliSeconds(sessionExpireTimeInMilliSeconds - runningTime);
+            timer = new Timer();
             scheduleStopSession();
         }
     }
 
 }
+
+
