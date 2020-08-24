@@ -20,9 +20,11 @@ public class DefaultSessionProcessor implements SessionProcessor {
     }
 
     @Override
-    public void createSession() {
-        session.start();
+    public String createSession() {
+        String response = session.start();
         scheduleStopSession();
+        
+        return response;
     }
 
     /**

@@ -7,7 +7,7 @@ public interface SessionProcessor {
     /**
      * create session
      */
-    void createSession();
+    String createSession();
 
     /**
      * reset session expireTime

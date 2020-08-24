@@ -15,7 +15,8 @@ https://github.com/mjieshen/SessionClient/tree/master/src/main/resources/uml-cla
 
 2.	运行:  
 1）通过LTEServer.py启动服务端；  
-2）调用SessionManager类的createSession()方法请求开启会话。
+2）调用SessionManager类的createSession()方法请求开启会话。  
+   例子：调用SessionManagerTest.java的testCreateSession()方法。
 
 **测试用例**
 1.	代码覆盖率：70%。

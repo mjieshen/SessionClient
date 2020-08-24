@@ -1,11 +1,14 @@
 package manager;
 
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.SettableFuture;
 import entity.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import processor.DefaultSessionProcessor;
 import processor.SessionProcessor;
 import task.DeliverySessionTask;
+
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -32,19 +35,21 @@ public class SessionManager {
     }
 
     /**
-     * create session
+     * create session async
      *
-     * @param sessionId sessionId
+     * @param sessionId                 sessionId
      * @param sessionTimeInMilliSeconds session expire time
      * @return
      */
-    public boolean createSession(long sessionId, long sessionTimeInMilliSeconds) {
+    public ListenableFuture<String> createSession(long sessionId, long sessionTimeInMilliSeconds) {
+        logger.info("createSession sessionId[{}] sessionTime[{}]", sessionId, sessionTimeInMilliSeconds);
         SessionProcessor sessionProcessor = new DefaultSessionProcessor(new Session(sessionId, sessionTimeInMilliSeconds));
         sessionProcessors.put(sessionId, sessionProcessor);
 
-        executor.submit(new DeliverySessionTask(sessionProcessor));
+        SettableFuture<String> settableFuture = SettableFuture.create();
+        executor.submit(new DeliverySessionTask(sessionProcessor, settableFuture));
 
-        return true;
+        return settableFuture;
     }
 
     /**
