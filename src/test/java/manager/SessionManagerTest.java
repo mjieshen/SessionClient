@@ -6,6 +6,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Created by shenjie on 2020/08/23.
+ */
 public class SessionManagerTest {
     /*
       TODO:

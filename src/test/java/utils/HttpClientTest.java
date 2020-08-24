@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSON;
 import entity.DeliverySessionCreationType;
 import org.junit.Test;
 
+/**
+ * Created by shenjie on 2020/08/23.
+ */
 public class HttpClientTest implements Constants {
     private HttpClient httpClient = new HttpClient();
 

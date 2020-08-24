@@ -4,6 +4,9 @@ import org.junit.Test;
 import utils.HttpClient;
 import utils.MockHttpClient;
 
+/**
+ * Created by shenjie on 2020/08/23.
+ */
 public class SessionTest {
 
     HttpClient mockHttpClient = new MockHttpClient();

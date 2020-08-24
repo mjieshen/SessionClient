@@ -3,6 +3,9 @@ package utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Created by shenjie on 2020/08/23.
+ */
 public class MockHttpClient extends HttpClient {
 
     private static Logger logger = LoggerFactory.getLogger(MockHttpClient.class);
