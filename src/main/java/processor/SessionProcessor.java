@@ -12,7 +12,7 @@ public interface SessionProcessor {
     /**
      * reset session expireTime
      *
-     * @param sessionTimeInMilliSeconds session expire time
+     * @param sessionExpireTimeInMilliSeconds session expire time
      */
-    void resetSessionTime(long sessionTimeInMilliSeconds);
+    void resetSessionTime(long sessionExpireTimeInMilliSeconds);
 }

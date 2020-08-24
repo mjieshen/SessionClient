@@ -38,12 +38,12 @@ public class SessionManager {
      * create session async
      *
      * @param sessionId                 sessionId
-     * @param sessionTimeInMilliSeconds session expire time
+     * @param sessionExpireTimeInMilliSeconds session expire time
      * @return
      */
-    public ListenableFuture<String> createSession(long sessionId, long sessionTimeInMilliSeconds) {
-        logger.info("createSession sessionId[{}] sessionTime[{}]", sessionId, sessionTimeInMilliSeconds);
-        SessionProcessor sessionProcessor = new DefaultSessionProcessor(new Session(sessionId, sessionTimeInMilliSeconds));
+    public ListenableFuture<String> createSession(long sessionId, long sessionExpireTimeInMilliSeconds) {
+        logger.info("createSession sessionId[{}] sessionTime[{}]", sessionId, sessionExpireTimeInMilliSeconds);
+        SessionProcessor sessionProcessor = new DefaultSessionProcessor(new Session(sessionId, sessionExpireTimeInMilliSeconds));
         sessionProcessors.put(sessionId, sessionProcessor);
 
         SettableFuture<String> settableFuture = SettableFuture.create();
@@ -56,25 +56,25 @@ public class SessionManager {
      * reset session expireTime by sessionId
      *
      * @param sessionId sessionId
-     * @param sessionTimeInMilliSeconds session expire time
+     * @param sessionExpireTimeInMilliSeconds session expire time
      */
-    public void resetSessionTime(long sessionId, long sessionTimeInMilliSeconds) {
-        logger.info("reset sessionId[{}] sessionTime[{}]", sessionId, sessionTimeInMilliSeconds);
+    public void resetSessionTime(long sessionId, long sessionExpireTimeInMilliSeconds) {
+        logger.info("reset sessionId[{}] sessionTime[{}]", sessionId, sessionExpireTimeInMilliSeconds);
         SessionProcessor sessionProcessor = sessionProcessors.get(sessionId);
         if (sessionProcessor != null) {
-            sessionProcessor.resetSessionTime(sessionTimeInMilliSeconds);
+            sessionProcessor.resetSessionTime(sessionExpireTimeInMilliSeconds);
         }
     }
 
     /**
      * reset all sessions expireTime
      *
-     * @param sessionTimeInMilliSeconds session expire time
+     * @param sessionExpireTimeInMilliSeconds session expire time
      */
-    public void resetAllSessionTime(long sessionTimeInMilliSeconds) {
-        logger.info("reset allSession sessionTime[{}]", sessionTimeInMilliSeconds);
+    public void resetAllSessionTime(long sessionExpireTimeInMilliSeconds) {
+        logger.info("reset allSession sessionTime[{}]", sessionExpireTimeInMilliSeconds);
         for (SessionProcessor sessionProcessor : sessionProcessors.values()) {
-            sessionProcessor.resetSessionTime(sessionTimeInMilliSeconds);
+            sessionProcessor.resetSessionTime(sessionExpireTimeInMilliSeconds);
         }
     }
 

@@ -9,13 +9,13 @@ import utils.HttpClient;
  */
 public class Session implements Constants {
     private long sessionId;
-    private long sessionTimeInMilliSeconds;
+    private long sessionExpireTimeInMilliSeconds;
     private long startTimeStamp;
     private HttpClient httpClient = new HttpClient();
 
-    public Session(long sessionId, long sessionTimeInMilliSeconds) {
+    public Session(long sessionId, long sessionExpireTimeInMilliSeconds) {
         this.sessionId = sessionId;
-        this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
+        this.sessionExpireTimeInMilliSeconds = sessionExpireTimeInMilliSeconds;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Session implements Constants {
     public String toString() {
         return "Session{" +
                 "sessionId=" + sessionId +
-                ", sessionTimeInMilliSeconds=" + sessionTimeInMilliSeconds +
+                ", sessionTimeInMilliSeconds=" + sessionExpireTimeInMilliSeconds +
                 ", startTimeStamp=" + startTimeStamp +
                 '}';
     }
@@ -84,12 +84,12 @@ public class Session implements Constants {
         return startTimeStamp;
     }
 
-    public long getSessionTimeInMilliSeconds() {
-        return sessionTimeInMilliSeconds;
+    public long getSessionExpireTimeInMilliSeconds() {
+        return sessionExpireTimeInMilliSeconds;
     }
 
-    public void setSessionTimeInMilliSeconds(long sessionTimeInMilliSeconds) {
-        this.sessionTimeInMilliSeconds = sessionTimeInMilliSeconds;
+    public void setSessionExpireTimeInMilliSeconds(long sessionExpireTimeInMilliSeconds) {
+        this.sessionExpireTimeInMilliSeconds = sessionExpireTimeInMilliSeconds;
     }
 
     public void setHttpClient(HttpClient httpClient) {

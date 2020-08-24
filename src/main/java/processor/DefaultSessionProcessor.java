@@ -23,7 +23,7 @@ public class DefaultSessionProcessor implements SessionProcessor {
     public String createSession() {
         String response = session.start();
         scheduleStopSession();
-        
+
         return response;
     }
 
@@ -41,20 +41,20 @@ public class DefaultSessionProcessor implements SessionProcessor {
                     logger.error("stop session failed!");
                 }
             }
-        }, session.getSessionTimeInMilliSeconds());
+        }, session.getSessionExpireTimeInMilliSeconds());
     }
 
     @Override
-    public void resetSessionTime(long sessionTimeInMilliSeconds) {
+    public void resetSessionTime(long sessionExpireTimeInMilliSeconds) {
         if (timer != null) {
             timer.cancel();
         }
 
         long runningTime = System.currentTimeMillis() - session.getStartTimeStamp();
-        if (runningTime >= sessionTimeInMilliSeconds) {
+        if (runningTime >= sessionExpireTimeInMilliSeconds) {
             session.stop();
         } else {
-            session.setSessionTimeInMilliSeconds(sessionTimeInMilliSeconds - runningTime);
+            session.setSessionExpireTimeInMilliSeconds(sessionExpireTimeInMilliSeconds - runningTime);
             scheduleStopSession();
         }
     }
